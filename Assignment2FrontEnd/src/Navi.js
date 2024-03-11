@@ -10,11 +10,11 @@ export default function Navi() {
         <Container>
           <Navbar.Brand href="/">Assignment2</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/form">Form</Nav.Link>
+            <Nav.Link href="/home">Home</Nav.Link>
+            <Nav.Link href="/forms">Form</Nav.Link>
             <Nav.Link href="https://api.nasa.gov/">NASA OPEN API's</Nav.Link>
             <Nav.Link href="https://github.com/sindhu-yasa/WebEngineeringSpringAPI">Springboot code</Nav.Link>
-            <Nav.Link href="https://github.com/sindhu-yasa/WebEngineeringSpringAPI">React code</Nav.Link>
+            <Nav.Link href="https://github.com/sindhu-yasa/ReactSpring">React code</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

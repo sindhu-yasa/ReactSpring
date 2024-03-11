@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import Forms from './Forms';
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
@@ -9,6 +10,7 @@ import {
 } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import HomePage from './home';
 
 
 
@@ -22,8 +24,13 @@ const router = createBrowserRouter([
     children:[
       {
         path : "forms",
-        element: <App/>
+        element: <Forms/>
       },
+      {
+        path : "home",
+        element: <HomePage/>
+      },
+      
     ]
   },
 ]);

@@ -1,8 +1,11 @@
 package com.assignment1.Assignment1.apicalls;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.*;
 import com.assignment1.Assignment1.services.response;
 import org.springframework.http.ResponseEntity;
+
+
+@CrossOrigin(origins="localhost:3000", methods={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE}) //adjust this to your frontend's origin
 @RestController
 public class getApi {
     @GetMapping("/nasaapodapi")

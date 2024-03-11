@@ -57,7 +57,7 @@ GET /nasaapodapi?start_date=2022-01-01&end_date=2022-01-10
 **Fetch 5 random APOD images:**
 
 ```
-GET /nasaapodapi?count=2
+GET /?count=2
 ```
 ![alt text](image-1.png)
 
