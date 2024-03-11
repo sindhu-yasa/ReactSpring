@@ -3,139 +3,185 @@ import { Container, Row, Col, Form, Button, Table, Modal } from 'react-bootstrap
 import MultipleResultUnit from './MultipleResultUnit';
 
 function Forms() {
-  const [apodData, setApodData] = useState({});
-  const [date, setDate] = useState('');
-  const [count, setCount] = useState('');
-  const [results, setResults] = useState([]);
-  const [selectedDate, setSelectedDate] = useState('');
+    const [apodData, setApodData] = useState({});
+    const [date, setDate] = useState('');
+    const [count, setCount] = useState('');
+    const [results, setResults] = useState([]);
+    const [startDate, setStartDate] = useState(''); // Updated state hook for start date
+    const [endDate, setEndDate] = useState(''); // Updated state hook for end date
 
-  const fetchApod = async (queryDate = '') => {
-    const apiKey = 'JVxN7pjB45luFSxGwHkTLntxg7wPrMAS8yra2F74'; // Replace with your actual API key
-    let url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`;
-    if (queryDate) {
-      url += `&date=${queryDate}`;
-    }
-    const response = await fetch(url);
-    const data = await response.json();
-    setApodData(data);
-  };
 
-  useEffect(() => {
-    fetchApod();
-  }, []);
-
-  const handleDateChange = (e) => {
-    setDate(e.target.value);
-  };
-
-  const handleCountChange = (e) => {
-    setCount(e.target.value);
-  };
-
-  const handleSelectedDateChange = (e) => {
-    setSelectedDate(e.target.value);
-  };
-
-  const submitDate = (e) => {
-    e.preventDefault();
-    fetchApod(date);
-  };
-
-  const submitForm = async (e) => {
-    e.preventDefault();
-  
-    const apiKey = 'JVxN7pjB45luFSxGwHkTLntxg7wPrMAS8yra2F74'; // Replace with your actual API key
-    
-    if (count) {
-        const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&count=${count}`;
-        try {
-          const response = await fetch(url);
-          const data = await response.json();
-          if (data) {
-            setResults(data); // Since it's a single date, wrap data in an array for consistency with the results state
-          }
-        } catch (error) {
-          console.error("Failed to fetch APOD data:", error);
+    const fetchApod = async (queryDate = '') => {
+        const apiKey = 'JVxN7pjB45luFSxGwHkTLntxg7wPrMAS8yra2F74'; // Replace with your actual API key
+        let url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`;
+        if (queryDate) {
+            url += `&date=${queryDate}`;
         }
-      
-    } else if (selectedDate) {
-      const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&date=${selectedDate}`;
-      try {
         const response = await fetch(url);
         const data = await response.json();
-        if (data) {
-          setResults(data); // Since it's a single date, wrap data in an array for consistency with the results state
-        }
-      } catch (error) {
-        console.error("Failed to fetch APOD data:", error);
-      }
-    }
-  };
-  
+        setApodData(data);
+    };
 
-  return (
-    <div>
-      <Container fluid style={{ height: '100vh', background: `url(${apodData.hdurl}) no-repeat center center fixed`, backgroundSize: 'cover' }}>
-        <Row className="justify-content-center align-items-center" style={{ height: '100vh' }}>
-          <Col md={6}>
-            <Form onSubmit={submitDate}>
-              <Form.Group controlId="dateForm">
-                <Form.Label>Select a Date</Form.Label>
-                <Form.Control type="date" name="date" value={date} onChange={handleDateChange} />
-              </Form.Group>
-              <Button variant="primary" type="submit">Submit</Button>
-            </Form>
-            {apodData.media_type === 'video' ? (
-              <iframe title="apodVideo" src={apodData.url} frameBorder="0" />
-            ) : (
-              <Modal.Dialog>
-                <Modal.Header closeButton>
-                  <Modal.Title>{apodData.title}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <p>{apodData.explanation}</p>
-                </Modal.Body>
-                <Modal.Footer>
-                  <p>Date: {apodData.date}</p>
-                  <p>Copyright: {apodData.copyright}</p>
-                </Modal.Footer>
-              </Modal.Dialog>
-            )}
-          </Col>
-        </Row>
-      </Container>
-      <Container fluid style={{ height: '100vh' }}>
-        <Row className="justify-content-center align-items-center" style={{ height: '100%' }}>
-          <Col md={6}>
-            <Form onSubmit={submitForm}>
-              <Form.Group controlId="countForm">
-                <Form.Label>Select Count</Form.Label>
-                <Form.Control type="number" name="count" value={count} onChange={handleCountChange} />
-              </Form.Group>
-              <Form.Group controlId="dateForm">
-                <Form.Label>Select Date</Form.Label>
-                <Form.Control type="date" name="selectedDate" value={selectedDate} onChange={handleSelectedDateChange} />
-              </Form.Group>
-              <Button variant="primary" type="submit">Submit</Button>
-            </Form>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Image</th>
-                  <th>Details</th>
-                </tr>
-              </thead>
-              <tbody>
-              {results.map((result, index) => (
-                  <MultipleResultUnit key={index} result={result} />
-                ))}
-              </tbody>
-            </Table>
-          </Col>
-        </Row>
-      </Container>
-    </div>
-  );
+    useEffect(() => {
+        fetchApod();
+    }, []);
+
+    const handleDateChange = (e) => setDate(e.target.value);
+    const handleCountChange = (e) => { setCount(e.target.value), setStartDate(''), setEndDate('') };
+    const handleStartDateChange = (e) => { setStartDate(e.target.value), setCount('') }; // Handler for start date
+    const handleEndDateChange = (e) => { setEndDate(e.target.value), setCount('') }; // Handler for end date
+
+
+    const submitDate = (e) => {
+        e.preventDefault();
+        fetchApod(date);
+    };
+
+    const submitForm = async (e) => {
+        e.preventDefault();
+
+        const apiKey = 'JVxN7pjB45luFSxGwHkTLntxg7wPrMAS8yra2F74'; // Replace with your actual API key
+
+        if (count) {
+            // Handle count-based fetch separately
+            const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&count=${count}`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                setResults(Array.isArray(data) ? data : [data]);
+            } catch (error) {
+                console.error("Failed to fetch APOD data:", error);
+            }
+        } else if (startDate && endDate) {
+            // Updated to fetch based on start and end dates
+            const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&start_date=${startDate}&end_date=${endDate}`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                setResults(Array.isArray(data) ? data : [data]); // Ensure results are always treated as an array
+            } catch (error) {
+                console.error("Failed to fetch APOD data:", error);
+            }
+        }
+    };
+    //   fluid style={{ height: '100vh', background: `url(${apodData.hdurl}) no-repeat center center fixed`, backgroundSize: 'cover' }}
+    const renderBackground = () => {
+        if (!apodData) return null;
+
+        if (apodData.media_type === 'video') {
+            return (
+                <iframe
+                    src={apodData.url}
+                    frameBorder="0"
+                    title="video-bg"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    style={{
+                        position: 'fixed',
+                        top: '0',
+                        left: '0',
+                        width: '100%',
+                        height: '100vh',
+                        zIndex: '-1',
+                    }}
+                />
+            );
+        } else {
+            return (
+                <div
+                    style={{
+                        position: 'fixed',
+                        top: '0',
+                        left: '0',
+                        width: '100%',
+                        height: '100vh',
+                        backgroundImage: `url(${apodData.hdurl || apodData.url})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        zIndex: '-1',
+                    }}
+                ></div>
+            );
+        }
+    };
+
+    return (
+        <div>
+            {renderBackground()}
+            <Container >
+                <Row className="justify-content-center align-items-center" style={{ height: '100vh' }}>
+                    <Col md={6} style={{ backgroundColor: 'rgb(255,255,255,0.4' }}>
+                        <Form onSubmit={submitDate}>
+                            <Form.Group controlId="dateForm">
+                                <Form.Label>Select a Date</Form.Label>
+                                <Form.Control type="date" name="date" value={date} onChange={handleDateChange} />
+                            </Form.Group>
+                            <Button variant="primary" type="submit">Submit</Button>
+                        </Form>=
+                        {apodData.media_type === 'video' ? (
+                            <iframe title="apodVideo" src={apodData.url} frameBorder="0" />
+                        ) : (
+                            <br/>
+                        )}
+                        <Modal.Dialog >
+                                <Modal.Header closeButton>
+                                    <Modal.Title>{apodData.title}</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    <p>{apodData.explanation}</p>
+                                    <div>
+                                        <p>{apodData.media_type === 'image' && <a href={apodData.hdurl} target="_blank" rel="noopener noreferrer">View HD Image</a>}</p>
+                                    </div>
+                                    <div>Date: {apodData.date}</div>
+                                </Modal.Body>
+                                <Modal.Footer><p>Copyright: {apodData.copyright}</p></Modal.Footer>
+                            </Modal.Dialog>
+                    </Col>
+                </Row>
+            </Container>
+            <Container fluid style={{ height: '100vh' }}>
+                <Row className="justify-content-center align-items-center" style={{ height: '100%' }}>
+                    <Col md={6} style={{ backgroundColor: 'rgb(255,255,255,0.4' }}>
+                        <Form onSubmit={submitForm} >
+                            {/* Count Form */}
+                            <Form.Group controlId="countForm">
+                                <Form.Label>Select Count</Form.Label>
+                                <Form.Control type="number" name="count" value={count} onChange={handleCountChange} />
+                            </Form.Group>
+
+                            {/* Start Date Form */}
+                            <Form.Group controlId="startDateForm">
+                                <Form.Label>Start Date</Form.Label>
+                                <Form.Control type="date" name="startDate" value={startDate} onChange={handleStartDateChange} />
+                            </Form.Group>
+
+                            {/* End Date Form */}
+                            <Form.Group controlId="endDateForm">
+                                <Form.Label>End Date</Form.Label>
+                                <Form.Control type="date" name="endDate" value={endDate} onChange={handleEndDateChange} />
+                            </Form.Group>
+                            <Button variant="primary" type="submit">Submit</Button>
+                        </Form>
+                    </Col>
+                    <Col md={10}>
+                        <Table striped bordered hover>
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {results.map((result, index) => (
+                                    <MultipleResultUnit key={index} result={result} />
+                                ))}
+                            </tbody>
+                        </Table>
+                    </Col>
+                </Row>
+            </Container>
+        </div>
+    );
 }
 
 export default Forms;

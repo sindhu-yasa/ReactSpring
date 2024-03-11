@@ -6,16 +6,16 @@ function MultipleResultUnit({ result }) {
     <tr>
       <td>
         {result.media_type === 'image' ? (
-          <img src={result.url} alt={result.title} style={{ width: '100px' }} />
+          <img src={result.url} alt={result.title} style={{ width: '20rem' }} />
         ) : (
-          <iframe title={result.title} src={result.url} frameBorder="0" style={{ width: '100px', height: '56px' }}></iframe>
+          <iframe title={result.title} src={result.url} frameBorder="0" style={{ width: '30rem', height: '30rem' }}></iframe>
         )}
       </td>
       <td>
         <Card>
           <Card.Body>
             <Card.Title>{result.title}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">{result.date}</Card.Subtitle>
+            <Card.Subtitle className="text-muted">{result.date}</Card.Subtitle>
             <Card.Text>{result.explanation}</Card.Text>
             {result.media_type === 'image' && <a href={result.hdurl} target="_blank" rel="noopener noreferrer">View HD Image</a>}
           </Card.Body>

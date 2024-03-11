@@ -7,7 +7,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchApod = async () => {
       const apiKey = 'JVxN7pjB45luFSxGwHkTLntxg7wPrMAS8yra2F74'; // Replace with your actual API key
-      const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`;
+      const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&date=2024-03-03`;
     //   const url = `localhost:8080/nasaapodapi`;
       try {
         const response = await fetch(url);
