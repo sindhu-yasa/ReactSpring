@@ -20,6 +20,18 @@ This project demonstrates how to integrate a React frontend with a Spring Boot b
 - `Assignment2FrontEnd`: Contains the React frontend code.
 - `WebEngineeringSpringAPI`: Contains the Spring Boot backend code.
 
+# NASA APOD API App
+
+![Screenshot 1](images/Screenshot%20(162).png)
+![Screenshot 2](images/Screenshot%20(163).png)
+![Screenshot 3](images/Screenshot%20(164).png)
+![Screenshot 4](images/Screenshot%20(167).png)
+![Screenshot 5](images/Screenshot%20(169).png)
+
+This project demonstrates how to integrate a React frontend with a Spring Boot backend to create a NASA APOD (Astronomy Picture of the Day) API-based application.
+
+
+
 ## Frontend Setup
 
 1. Navigate to the `Assignment2FrontEnd` directory.
