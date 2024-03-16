@@ -4,14 +4,14 @@ import { Row, Col, Card } from 'react-bootstrap';
 function MultipleResultUnit({ result }) {
   return (
     <tr>
-      <td>
+      <Card>
         {result.media_type === 'image' ? (
           <img src={result.url} alt={result.title} style={{ width: '20rem' }} />
         ) : (
           <iframe title={result.title} src={result.url} frameBorder="0" style={{ width: '30rem', height: '30rem' }}></iframe>
         )}
-      </td>
-      <td>
+      </Card>
+      <Card>
         <Card>
           <Card.Body>
             <Card.Title>{result.title}</Card.Title>
@@ -23,7 +23,7 @@ function MultipleResultUnit({ result }) {
             <small className="text-muted">Copyright: {result.copyright}</small>
           </Card.Footer>
         </Card>
-      </td>
+      </Card>
     </tr>
   );
 }

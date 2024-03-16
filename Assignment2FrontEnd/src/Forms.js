@@ -13,9 +13,10 @@ function Forms() {
 
     const fetchApod = async (queryDate = '') => {
         const apiKey = 'JVxN7pjB45luFSxGwHkTLntxg7wPrMAS8yra2F74'; // Replace with your actual API key
-        let url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`;
+        // let url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`;
+        let url =`/get/nasaapodapi`
         if (queryDate) {
-            url += `&date=${queryDate}`;
+            url += `?date=${queryDate}`;
         }
         const response = await fetch(url);
         const data = await response.json();
@@ -27,9 +28,22 @@ function Forms() {
     }, []);
 
     const handleDateChange = (e) => setDate(e.target.value);
-    const handleCountChange = (e) => { setCount(e.target.value), setStartDate(''), setEndDate('') };
-    const handleStartDateChange = (e) => { setStartDate(e.target.value), setCount('') }; // Handler for start date
-    const handleEndDateChange = (e) => { setEndDate(e.target.value), setCount('') }; // Handler for end date
+    const handleCountChange = (e) => { 
+        setCount(e.target.value);
+        setStartDate('');
+        setEndDate('');
+    };
+    
+    const handleStartDateChange = (e) => { 
+        setStartDate(e.target.value);
+        setCount('');
+    }; 
+    
+    const handleEndDateChange = (e) => { 
+        setEndDate(e.target.value);
+        setCount('');
+    }; 
+    
 
 
     const submitDate = (e) => {
@@ -44,7 +58,8 @@ function Forms() {
 
         if (count) {
             // Handle count-based fetch separately
-            const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&count=${count}`;
+            // const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&count=${count}`;
+            let url =`/get/nasaapodapi?count=${count}`
             try {
                 const response = await fetch(url);
                 const data = await response.json();
@@ -54,7 +69,8 @@ function Forms() {
             }
         } else if (startDate && endDate) {
             // Updated to fetch based on start and end dates
-            const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&start_date=${startDate}&end_date=${endDate}`;
+            // const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&start_date=${startDate}&end_date=${endDate}`;
+            let url =`/get/nasaapodapi?start_date=${startDate}&end_date=${endDate}`
             try {
                 const response = await fetch(url);
                 const data = await response.json();
@@ -167,8 +183,7 @@ function Forms() {
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
-                                    <th>Image</th>
-                                    <th>Details</th>
+                                    <th>Results</th>
                                 </tr>
                             </thead>
                             <tbody>

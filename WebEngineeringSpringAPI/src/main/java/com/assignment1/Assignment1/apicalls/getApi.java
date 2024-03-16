@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 
 @CrossOrigin(origins="localhost:3000", methods={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE}) //adjust this to your frontend's origin
 @RestController
+@RequestMapping("/get")
 public class getApi {
     @GetMapping("/nasaapodapi")
 	public ResponseEntity<?> getresponse(@RequestParam(value = "date", required = false) String date,
