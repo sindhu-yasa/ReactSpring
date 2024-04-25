@@ -153,10 +153,18 @@ function Forms() {
     return (
         <div>
             {renderBackground()}
+            
             <Container >
+                {/* a soft rounded div that contains hyperlink to dateForm and countForm */}
+                <div className="rounded shadow p-3 mb-5 bg-white rounded" >
+                    <p className="text-center" style={{ color: 'black' }}> CLick on links below to go to forms </p>
+                    <a className="text-center" style={{ color: 'black' }} href= "#dateForm">Date Form</a>
+                    <br></br>
+                    <a className="text-center" style={{ color: 'black' }} href= "#countForm">Count Form</a>
+                </div>
                 <Row className="justify-content-center align-items-center" style={{ height: '100vh' }}>
                     <Col md={6} style={{ backgroundColor: 'rgb(255,255,255,0.4' }}>
-                        <Form onSubmit={submitDate}>
+                        <Form onSubmit={submitDate} id ="dateForm">
                             <Form.Group controlId="dateForm">
                                 <Form.Label>Select a Date</Form.Label>
                                 <Form.Control type="date" name="date" value={date} onChange={handleDateChange} />
@@ -187,12 +195,14 @@ function Forms() {
             <Container fluid style={{ height: '100vh' }}>
                 <Row className="justify-content-center align-items-center" style={{ height: '100%' }}>
                     <Col md={6} style={{ backgroundColor: 'rgb(255,255,255,0.4' }}>
-                        <Form onSubmit={submitForm} >
+                        <Form onSubmit={submitForm} id ="countForm" >
                             {/* Count Form */}
                             <Form.Group controlId="countForm">
                                 <Form.Label>Select Count</Form.Label>
                                 <Form.Control type="number" name="count" value={count} onChange={handleCountChange} />
                             </Form.Group>
+
+                            <p className="text-center">OR</p>
 
                             {/* Start Date Form */}
                             <Form.Group controlId="startDateForm">
